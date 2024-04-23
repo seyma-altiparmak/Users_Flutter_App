@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:users_flutterapp/data/entity/users.dart';
+import 'package:users_flutterapp/ui/cubit/homepagecubit.dart';
 import 'package:users_flutterapp/ui/views/details.dart';
 import 'package:users_flutterapp/ui/views/register_page.dart';
 
@@ -20,17 +22,10 @@ class _HomePageState extends State<HomePage> {
   Future<void> delete(int id) async {
     print("delete : $id");
   }
-
-  Future<List<Users>> userLoad() async {
-    var userList = <Users>[];
-    var k1 = Users(user_id: 1, user_phone: "532654852", user_name: "Aysel");
-    var k2 = Users(user_id: 2, user_phone: "524528526", user_name: "Hamide");
-    var k3 = Users(user_id: 3, user_phone: "2568596", user_name: "Saka Su");
-    userList.add(k1);
-    userList.add(k2);
-    userList.add(k3);
-
-    return userList;
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomePage_Cubit>().userLoad();
   }
 
   @override
@@ -63,13 +58,11 @@ class _HomePageState extends State<HomePage> {
                   icon: const Icon(Icons.search)),
         ],
       ),
-      body: FutureBuilder<List<Users>>(
-        future: userLoad(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            var userList = snapshot.data;
+      body: BlocBuilder<HomePage_Cubit,List<Users>>(
+        builder: (context, userList) {
+          if (userList.isNotEmpty) {
             return ListView.builder(
-                itemCount: userList!.length,
+                itemCount: userList.length,
                 itemBuilder: (context, i) {
                   var k = userList[i];
                   return GestureDetector(
