@@ -1,0 +1,3 @@
+class DetailsPage_Cubit{
+
+}
