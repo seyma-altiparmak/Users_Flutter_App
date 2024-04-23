@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:users_flutterapp/data/entity/users.dart';
+import 'package:users_flutterapp/ui/cubit/detailscubit.dart';
 
 class Details extends StatefulWidget {
   Users user;
@@ -14,9 +16,6 @@ class _DetailsState extends State<Details> {
   var tf_usersName = TextEditingController();
   var tf_userPhone = TextEditingController();
 
-  Future<void> UpdateUser(int id,String name, String telephone) async{
-    print("User updated : ${id}, ${name}, ${telephone}");
-  }
 
   @override
   void initState() {
@@ -41,7 +40,7 @@ class _DetailsState extends State<Details> {
               TextField(controller: tf_userPhone,
                 decoration: const InputDecoration(hintText: "Phone Number"),),
               ElevatedButton(onPressed: (){
-                UpdateUser(widget.user.user_id,tf_usersName.text,tf_userPhone.text);
+                context.read<DetailsPage_Cubit>().UpdateUser(widget.user.user_id,tf_usersName.text,tf_userPhone.text);
               }, child: const Text("UPDATE"),),
             ],
           ),

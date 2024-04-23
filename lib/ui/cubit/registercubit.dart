@@ -7,6 +7,6 @@ class RegisterPage_Cubit extends Cubit<void>{
   var krepo = UsersDaoRepository();
 
   Future<void> Save(String name, String telephone) async{
-    krepo.Save(name, telephone);
+    await krepo.Save(name, telephone);
   }
 }

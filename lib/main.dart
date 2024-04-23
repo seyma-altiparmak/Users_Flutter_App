@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:users_flutterapp/ui/cubit/detailscubit.dart';
 import 'package:users_flutterapp/ui/cubit/registercubit.dart';
 import 'package:users_flutterapp/ui/views/homepage.dart';
 
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => RegisterPage_Cubit()),
+        BlocProvider(create: (context) => DetailsPage_Cubit()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
