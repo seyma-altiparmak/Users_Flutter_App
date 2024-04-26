@@ -11,4 +11,14 @@ class HomePage_Cubit extends Cubit<List<Users>>{
     var list = await krepo.userLoad();
     emit(list);
   }
+
+  Future<void> search(String searchWord) async {
+    var list = await krepo.search(searchWord);
+    emit(list);
+  }
+
+  Future<void> delete(int id) async {
+    await krepo.delete(id);
+    await userLoad();
+  }
 }

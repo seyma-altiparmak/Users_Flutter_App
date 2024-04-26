@@ -7,6 +7,9 @@ class UsersDaoRepository{
   Future<void> UpdateUser(int id,String name, String telephone) async{
     print("User updated : ${id}, ${name}, ${telephone}");
   }
+  Future<void> delete(int id) async {
+    print("delete : $id");
+  }
   Future<List<Users>> userLoad() async {
     var userList = <Users>[];
     var k1 = Users(user_id: 1, user_phone: "532654852", user_name: "Aysel");
@@ -15,6 +18,12 @@ class UsersDaoRepository{
     userList.add(k1);
     userList.add(k2);
     userList.add(k3);
+    return userList;
+  }
+  Future<List<Users>> search(String searchWord) async {
+    var userList = <Users>[];
+    var k1 = Users(user_id: 1, user_phone: "532654852", user_name: "Aysel");
+    userList.add(k1);
     return userList;
   }
 }
