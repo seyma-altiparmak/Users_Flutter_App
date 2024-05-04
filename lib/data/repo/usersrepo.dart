@@ -1,29 +1,47 @@
 import 'package:users_flutterapp/data/entity/users.dart';
+import 'package:users_flutterapp/sqlite/databasehelper.dart';
 
 class UsersDaoRepository{
   Future<void> Save(String name, String telephone) async{
-    print("User : ${name}, ${telephone}");
+    var db = await DatabaseHelper.databaseAccess();
+    var newUser = Map<String,dynamic>();
+
+    newUser["user_name"] = name;
+    newUser["user_phone"] = telephone;
+
+    await db.insert("Users", newUser);
   }
   Future<void> UpdateUser(int id,String name, String telephone) async{
-    print("User updated : ${id}, ${name}, ${telephone}");
+    var db = await DatabaseHelper.databaseAccess();
+    var updatedUser = Map<String,dynamic>();
+
+    updatedUser["user_name"] = name;
+    updatedUser["user_phone"] = telephone;
+
+    await db.update("Users", updatedUser, where: "user_id = ?", whereArgs: [id]);
   }
   Future<void> delete(int id) async {
-    print("delete : $id");
+    var db = await DatabaseHelper.databaseAccess();
+    await db.delete("Users", where: "user_id = ?", whereArgs: [id]);
   }
   Future<List<Users>> userLoad() async {
-    var userList = <Users>[];
-    var k1 = Users(user_id: 1, user_phone: "532654852", user_name: "Aysel");
-    var k2 = Users(user_id: 2, user_phone: "524528526", user_name: "Hamide");
-    var k3 = Users(user_id: 3, user_phone: "2568596", user_name: "Saka Su");
-    userList.add(k1);
-    userList.add(k2);
-    userList.add(k3);
-    return userList;
+    var db = await DatabaseHelper.databaseAccess();
+    List<Map<String,dynamic>> maps = await db.rawQuery("SELECT * FROM Users");
+
+    return List.generate((maps.length), (i)
+    {
+      var row = maps[i];
+      return Users(user_id: row["user_id"], user_phone: row["user_phone"], user_name: row["user_name"]);
+    });
   }
   Future<List<Users>> search(String searchWord) async {
-    var userList = <Users>[];
-    var k1 = Users(user_id: 1, user_phone: "532654852", user_name: "Aysel");
-    userList.add(k1);
-    return userList;
+    var db = await DatabaseHelper.databaseAccess();
+    List<Map<String,dynamic>> maps = await db.rawQuery("SELECT * FROM Users WHERE user_name LIKE '%$searchWord%'");
+
+    return List.generate((maps.length), (i)
+    {
+      var row = maps[i];
+      return Users(user_id: row["user_id"], user_phone: row["user_phone"], user_name: row["user_name"]);
+    });
   }
 }

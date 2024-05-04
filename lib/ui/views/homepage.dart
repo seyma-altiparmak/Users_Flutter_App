@@ -67,7 +67,9 @@ class _HomePageState extends State<HomePage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => Details(user: k)))
-                            .then((value) => print("NOW : HomePage"));
+                            .then((value) {
+                          context.read<HomePage_Cubit>().userLoad();
+                        });
                       },
                       child: Card(
                         child: SizedBox(
@@ -125,7 +127,9 @@ class _HomePageState extends State<HomePage> {
             Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const RegisterPage()))
                 .then(
-              (value) => print("NOW : Homepage"),
+              (value) {
+                context.read<HomePage_Cubit>().userLoad();
+              },
             );
           },
           child: const Icon(Icons.add),
