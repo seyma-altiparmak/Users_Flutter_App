@@ -3,18 +3,19 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DatabaseHelper{
+class DatabaseHelper {
   static final String databaseName = "userdb.sqlite";
 
-  static Future<Database> databaseAccess() async{
-    String databasePath = join(await getDatabasesPath(),databaseName);
+  static Future<Database> databaseAccess() async {
+    String databasePath = join(await getDatabasesPath(), databaseName);
 
-    if(await databaseExists(databasePath)){
+    if (await databaseExists(databasePath)) {
       print("Database already exist");
-    }else{
-      ByteData data = await rootBundle.load("databases/$databaseName");
-      List<int> bytes = data.buffer.asUint8List(data.offsetInBytes,data.lengthInBytes);
-      await File(databasePath).writeAsBytes(bytes,flush: true);
+    } else {
+      ByteData data = await rootBundle.load("./databases/$databaseName");
+      List<int> bytes =
+          data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+      await File(databasePath).writeAsBytes(bytes, flush: true);
       print("Database copied");
     }
 
