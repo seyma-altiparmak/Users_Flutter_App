@@ -40,7 +40,7 @@ class _DetailsState extends State<Details> {
               TextField(controller: tf_userPhone,
                 decoration: const InputDecoration(hintText: "Phone Number"),),
               ElevatedButton(onPressed: (){
-                context.read<DetailsPage_Cubit>().UpdateUser(widget.user.user_id,tf_usersName.text,tf_userPhone.text);
+                context.read<DetailsPage_Cubit>().UpdateUser(int.parse(widget.user.user_id),tf_usersName.text,tf_userPhone.text);
               }, child: const Text("UPDATE"),),
             ],
           ),

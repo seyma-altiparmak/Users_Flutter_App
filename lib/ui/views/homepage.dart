@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                                       action: SnackBarAction(
                                         label: "Continue",
                                         onPressed: (){
-                                          context.read<HomePage_Cubit>().delete(k.user_id);
+                                          context.read<HomePage_Cubit>().delete(int.parse(k.user_id));
                                         },
                                       ),
                                     ),
